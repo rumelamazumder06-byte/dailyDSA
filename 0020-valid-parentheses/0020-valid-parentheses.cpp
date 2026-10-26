@@ -1,27 +1,26 @@
 class Solution {
 public:
     bool isValid(string s) {
-      
-        if (s.length() % 2 != 0) return false;
+        stack<char>st;
+        if(s.size()%2!=0)
+        return false;
 
-        std::unordered_map<char, char> map = {
-            {')', '('},
-            {'}', '{'},
-            {']', '['}
-        };
-        std::stack<char> st;
-
-        for (char c : s) {
-            if (map.count(c)) {
-                if (st.empty() || st.top() != map[c]) {
-                    return false;
-                }
+        for(int i=0;i<s.size();i++){
+            if(s[i]=='['||s[i]=='{'||s[i]=='(')
+            st.push(s[i]);
+            else
+            {
+                if(st.size()==0)
+                return false;
+                if((st.top()=='('&&s[i]==')')||(st.top()=='{'&&s[i]=='}')||(st.top()=='['&&s[i]==']'))
                 st.pop();
-            } else {
-                st.push(c);
+                else
+                return false;
             }
         }
-
-        return st.empty(); 
+        if(st.size()==0)
+        return true;
+        else
+        return false;
     }
 };
